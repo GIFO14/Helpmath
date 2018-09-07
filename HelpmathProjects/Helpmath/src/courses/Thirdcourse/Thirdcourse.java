@@ -1,4 +1,5 @@
 
+import courses.Thirdcourse.UnitsThirdcourse.Calculator.Misusetypical;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
@@ -58,12 +59,18 @@ public class Thirdcourse extends JFrame implements ActionListener{
     
     public void actionPerformed(ActionEvent eThirdcourse) {//here the event is coded
         if (eThirdcourse.getSource()==systemofequation){
-            Systemofequation systemofequation=new Systemofequation();
+            /*Systemofequation systemofequation=new Systemofequation();
             systemofequation.setBounds(0,0,1100,630);
             systemofequation.setVisible(true);
             systemofequation.setResizable(false);
-            systemofequation.setLocationRelativeTo(null);
-            this.setVisible(false);
+            systemofequation.setLocationRelativeTo(null);*/
+            
+            Misusetypical misusetypical =new Misusetypical();
+            misusetypical.setBounds(0,0,1100,630);
+            misusetypical.setVisible(true);
+            misusetypical.setResizable(false);
+            misusetypical.setLocationRelativeTo(null);
+            this.setVisible(false); 
         }
         
         if (eThirdcourse.getSource()==seconddegreeequations){

@@ -81,9 +81,9 @@ public class Mediumdispersion extends JFrame implements ActionListener{
                 boolean checkTrue=false;
                 //(5-14)^2*7+(61-12)^4*22+(2-44)^3*2
                 MisuseTypicalCalculator sender=new MisuseTypicalCalculator();
-                sender.setParsetostring(string);
+                sender.setParseToString(string);
                 sender.setCheckTrue1(checkTrue);
-                sender.MisuseTypical();
+                sender.misuseTypical();
                 showresult.setText(" Resultat: "+sender.getPassResultToClass());
                 temporalString=showresult.getText();
                 temporalString=temporalString.replaceAll("E","x10^");

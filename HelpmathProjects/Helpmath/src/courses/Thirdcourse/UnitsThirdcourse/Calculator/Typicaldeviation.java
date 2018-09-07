@@ -72,8 +72,8 @@ public class Typicaldeviation extends JFrame implements ActionListener {
             String string=misuseTypical.getText();
             //(432-333,33333)^32*8+(0,333-12331,3211)^2*4
             MisuseTypicalCalculator sender=new MisuseTypicalCalculator();
-            sender.setParsetostring(string);
-            sender.MisuseTypical();
+            sender.setParseToString(string);
+            sender.misuseTypical();
             showresult.setText(" Resultat: "+ Math.sqrt(sender.getPassResultToClass()));
             temporalString=showresult.getText();
             temporalString=temporalString.replaceAll("E","x10^");
