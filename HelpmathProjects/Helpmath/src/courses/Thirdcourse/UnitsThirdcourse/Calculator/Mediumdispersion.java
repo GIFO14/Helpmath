@@ -76,19 +76,27 @@ public class Mediumdispersion extends JFrame implements ActionListener{
 
     public void actionPerformed(ActionEvent eMediumdispersion){
         if (eMediumdispersion.getSource()==accept){
+            
              try{
+                 
                 String string=misuseTypical.getText();
-                boolean checkTrue=false;
-                //(5-14)^2*7+(61-12)^4*22+(2-44)^3*2
+                
+                //(3-4)+(5-4)+(1-4)+(11-4)+(4-4)
+                
                 MisuseTypicalCalculator sender=new MisuseTypicalCalculator();
                 sender.setParseToString(string);
-                sender.setCheckTrue1(checkTrue);
+                sender.setCheckTrue1(false);
+                sender.setMultiplierAndpower(false);
+                sender.setCheckTrue(true);
                 sender.misuseTypical();
+                
                 showresult.setText(" Resultat: "+sender.getPassResultToClass());
                 temporalString=showresult.getText();
                 temporalString=temporalString.replaceAll("E","x10^");
                 showresult.setText(temporalString);
+                
             }catch(Exception e){
+                
                 JOptionPane.showMessageDialog(null,"Has escrit nombres massa complexos. Prova a no utilitzar potències ni multiplicants amb decimals.");
         }
 
@@ -96,11 +104,13 @@ public class Mediumdispersion extends JFrame implements ActionListener{
     }
 
     public static void main(String args[]){
+        
         Mediumdispersion mediumdispersion=new Mediumdispersion();
         mediumdispersion.setBounds(0,0,1100,630);
         mediumdispersion.setVisible(true);
         mediumdispersion.setResizable(false);
         mediumdispersion.setLocationRelativeTo(null);
+        
     }
 
     

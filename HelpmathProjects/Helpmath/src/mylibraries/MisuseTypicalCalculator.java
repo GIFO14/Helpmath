@@ -14,7 +14,7 @@ public class MisuseTypicalCalculator {
     private static double result = 0, m1, m2, m3, passResultToClass, getmultiplierDouble2 = 0, getmultiplierDouble = 0;
     private static String parseToString, get, getterM2, getmultiplierstring01, getmultiplierstring02, get00string, m2string, checker, get1, getDivisors, get2;
     private static int j = 0, getparse, ds, getmultiplierint01, getmultiplierint02, c2 = 0, o = 0, q, totalgetInt, u = 0, aux, timesCounter = 0;
-    private static boolean check = false, checkTrue = false, checkTrue1 = true, checkTrue2 = false, ifTrueComa = false;
+    private static boolean check = false, checkTrue = false, checkTrue1 = true, checkTrue2 = false, ifTrueComa = false, multiplierAndpower = true;
 
     private static String[] misuseTypicalChar, getDivision;
     private static String[] get00;
@@ -24,8 +24,10 @@ public class MisuseTypicalCalculator {
 
         while (j < 1) {
             //This line replace all the characters that are not between 0-9 (and 0 and 9) for a null character.
+            
             setParseToString(parseToString.replaceAll("[^0-9+-^*]", ""));
             //Replace all "," for ".".
+            
             //Split the string using the "+".
             misuseTypicalChar = parseToString.split(Pattern.quote("+"));
 
@@ -36,209 +38,237 @@ public class MisuseTypicalCalculator {
                 //This split the string char by char, and the characters are put in the "get00" string array.
                 get00 = get.split("");
 
-                for (int i = 0; i < get00.length; i++) {
+                //This if will only be executed if what we want to calculate needs a multiplier and a power
+                if (multiplierAndpower) {
 
-                    //The usage of this three lines, is to get the char located in the last position of the array and put it in a variable.
-                    //This number will be used as a power.
-                    while (get00[i].equals("^") || u > 0 && !get00[i].equals("*")) {
-                        u++;
+                    for (int i = 0; i < get00.length; i++) {
 
-                        if (getmultiplierstring01 == null) {
+                        //The usage of this three lines, is to get the char located in the last position of the array and put it in a variable.
+                        //This number will be used as a power.
+                        while (get00[i].equals("^") || u > 0 && !get00[i].equals("*")) {
+                            u++;
 
-                            getmultiplierstring01 = get00[i + 1];
+                            //This line is used to fill for the first time  this string with the next character of "^"  
+                            if (getmultiplierstring01 == null) {
 
-                        } else if (!get00[i].equals("*")) {
-                            i++;
+                                getmultiplierstring01 = get00[i + 1];
 
-                            if (!get00[i].equals("*")) {
-
-                                getmultiplierstring01 += get00[i];
-                            }
-
-                            aux = getmultiplierstring01.length();
-
-                            if (getmultiplierstring01.substring(aux - 1, aux).equals(",")) {
-
-                                getmultiplierstring01 = getmultiplierstring01.replaceAll(",", "");
-                                int temporal = Integer.parseInt(getmultiplierstring01);
-                                temporal = temporal / 10;
-                                getmultiplierstring01 = String.valueOf(temporal);
-                                getmultiplierstring01 += ",";
-
+                              //This else if is used to continue filling the string with the next characters until the "*"
+                            } else if (!get00[i].equals("*")) {
                                 i++;
-                                getmultiplierstring01 += get00[i];
-                                ifTrueComa = true;
+
+                                if (!get00[i].equals("*")) {
+
+                                    getmultiplierstring01 += get00[i];
+                                }
+                                
+                                 
+                                aux = getmultiplierstring01.length();
+                                
+                                //This if is used only if the current last character is a ","
+                                if (getmultiplierstring01.substring(aux - 1, aux).equals(",")) {
+                                    
+                                    //First the "," is replaced by a ""
+                                    getmultiplierstring01 = getmultiplierstring01.replaceAll(",", "");
+                                    
+                                    //then the number without "," is parsed to int, divided by 10 to delete the last character that is not useful. 
+                                    //The reason why is not useful is because the last number (the number before the not useful number) is duplicated and it has to be deleted
+                                    int temporal = Integer.parseInt(getmultiplierstring01);
+                                    temporal = temporal / 10;
+                                    
+                                    //afterwards the variable with the dupllicated number deleted is parsed to String and a "," is added
+                                    getmultiplierstring01 = String.valueOf(temporal);
+                                    getmultiplierstring01 += ",";
+                                    
+                                    //now the next number is included into the string 
+                                    i++;
+                                    getmultiplierstring01 += get00[i];
+                                    
+                                    //This boolean var is setted to true because the program can access to the next if
+                                    //It is only true if the first decimal have been added into the string yet.
+                                    ifTrueComa = true;
+
+                                }
 
                             }
 
+                            if (ifTrueComa) {
+
+                                //This  if is used to controll if is the first time this if is executed or not.
+                                if (timesCounter == 0) {
+                                    
+                                    //This var contains the number that the final number will be divided to.2
+                                    timesCounter = 10;
+
+                                } else {
+
+                                    timesCounter *= 10;
+
+                                }
+                                
+                                if (getmultiplierstring01.substring(aux - 2, aux - 1).equals(",")) {
+
+                                    getmultiplierstring01 = getmultiplierstring01.replaceAll(",", "");
+
+                                }
+
+                                getmultiplierDouble = Integer.parseInt(getmultiplierstring01);
+                                getmultiplierDouble = getmultiplierDouble / timesCounter;
+                                
+                              //If the "ifTrueComa" vaar is not true means that the string doesn't have any "," 
+                              //and there's no need to execute all the other code lines 
+                            } else {
+
+                                getmultiplierDouble = Integer.parseInt(getmultiplierstring01);
+
+                            }
                         }
 
                         if (ifTrueComa) {
 
-                            if (timesCounter == 0) {
+                            getmultiplierDouble *= 10;
 
-                                timesCounter = 10;
+                        }
+
+                        timesCounter = 0;
+                        ifTrueComa = false;
+                        
+                        if (get00[i].equals("*")) {
+
+                            checkTrue2 = true;
+
+                        }
+
+                        while (u > 0 && i != get00.length - 1 || checkTrue2) {
+
+                            if (getmultiplierstring02 == null) {
+
+                                getmultiplierstring02 = get00[i + 1];
+
+                            } else if (i < get00.length - 1) {
+                                i++;
+
+                                if (i < get00.length - 1) {
+
+                                    getmultiplierstring02 += get00[i + 1];
+
+                                }
+
+                                aux = getmultiplierstring02.length();
+
+                                if (getmultiplierstring02.substring(aux - 1, aux).equals(",")) {
+
+                                    //Here this if is different of the other located higher, because here there isn't the same problem
+                                    //This only add the next number of the ","
+                                    i++;
+                                    getmultiplierstring02 += get00[i + 1];
+                                    ifTrueComa = true;
+
+                                }
+
+                            }
+
+                            if (ifTrueComa) {
+
+                                if (timesCounter == 0) {
+
+                                    timesCounter = 10;
+
+                                } else {
+
+                                    timesCounter *= 10;
+
+                                }
+
+                                if (getmultiplierstring02.substring(aux - 1, aux).equals(",")) {
+
+                                    getmultiplierstring02 = getmultiplierstring02.replaceAll(",", "");
+
+                                }
+
+                                getmultiplierDouble2 = Integer.parseInt(getmultiplierstring02);
+                                getmultiplierDouble2 = getmultiplierDouble2 / timesCounter;
 
                             } else {
 
-                                timesCounter *= 10;
+                                getmultiplierDouble2 = Integer.parseInt(getmultiplierstring02);
 
                             }
-
-                            if (getmultiplierstring01.substring(aux - 2, aux - 1).equals(",")) {
-
-                                getmultiplierstring01 = getmultiplierstring01.replaceAll(",", "");
-
-                            }
-
-                            getmultiplierDouble = Integer.parseInt(getmultiplierstring01);
-                            getmultiplierDouble = getmultiplierDouble / timesCounter;
-
-                        } else {
-
-                            getmultiplierDouble = Integer.parseInt(getmultiplierstring01);
-
-                        }
-                        /*if (getmultiplierint01 > 9) {
-                            getmultiplierint01 = getmultiplierint01 / 10;
-                        }*/
-
-                    }
-
-                    if (ifTrueComa) {
-
-                        getmultiplierDouble = getmultiplierDouble * 10;
-
-                    }
-
-                    timesCounter = 0;
-                    ifTrueComa = false;
-
-                    //The usage of this three lines is to get the char that is located in the last position of the array and put it in a variable. 
-                    //Then it is deleted. This number will be used as a multipier.
-                    if (get00[i].equals("*")) {
-
-                        checkTrue2 = true;
-
-                    }
-
-                    while (u > 0 && i != get00.length - 1 || checkTrue2) {
-
-                        if (getmultiplierstring02 == null) {
-
-                            getmultiplierstring02 = get00[i + 1];
-
-                        } else if (i < get00.length - 1) {
-                            i++;
-
-                            if (i < get00.length - 1) {
-
-                                getmultiplierstring02 += get00[i + 1];
-
-                            }
-
-                            aux = getmultiplierstring02.length();
-
-                            if (getmultiplierstring02.substring(aux - 1, aux).equals(",")) {
-
-                                /*getmultiplierstring02 = getmultiplierstring02.replaceAll(",", "");
-                                int temporal = Integer.parseInt(getmultiplierstring02);
-                                temporal = temporal / 10;
-                                getmultiplierstring02 = String.valueOf(temporal);
-                                getmultiplierstring02 += ",";*/
-
-                                i++;
-                                getmultiplierstring02 += get00[i + 1];
-                                ifTrueComa = true;
-
-                            }
-
+                            
+                            checkTrue2 = false;
                         }
 
                         if (ifTrueComa) {
 
-                            if (timesCounter == 0) {
-
-                                timesCounter = 10;
-
-                            } else {
-
-                                timesCounter *= 10;
-
-                            }
-
-                            if (getmultiplierstring02.substring(aux - 1, aux).equals(",")) {
-
-                                getmultiplierstring02 = getmultiplierstring02.replaceAll(",", "");
-
-                            }
-
-                            getmultiplierDouble2 = Integer.parseInt(getmultiplierstring02);
-                            getmultiplierDouble2 = getmultiplierDouble2 / timesCounter;
-
-                        } else {
-
-                            getmultiplierDouble2 = Integer.parseInt(getmultiplierstring02);
+                            getmultiplierDouble2 = getmultiplierDouble2 * 10;
 
                         }
-                        /*if (getmultiplierint02 > 9) {
-                            getmultiplierint02 = getmultiplierint02 / 10;
-                       }*/
-
-                        checkTrue2 = false;
-                    }
-
-                    if (ifTrueComa) {
-
-                        getmultiplierDouble2 = getmultiplierDouble2 * 10;
 
                     }
-
                 }
 
                 get = "";
 
+                //This for is used to put all the numbers and characters that are in an expression in a String
                 for (ds = 0; ds < get00.length; ds++) {
                     get00string += get00[ds];
                     get00string = get00string.replaceAll("^0-9", "");
                     get00string = get00string.replaceAll("null", "");
                 }
 
+                //Then the  expression is separated using the "^" and put in a string only the numbers that are substring 
                 get01 = get00string.split(Pattern.quote("^"));
                 get2 = get01[c2];
                 get01[c2] = null;
-                get01[c2 + 1] = null;
+                
+                //This if controlls if what we are calculating  needs the power and the multiplier to be calculate
+                if (multiplierAndpower) {
 
+                    get01[c2 + 1] = null;
+
+                }
+                
+                //The expression "x-x" (x == any number) is separated by the "-"
                 get01 = get2.split(Pattern.quote("-"));
                 m1 = Double.parseDouble(get01[c2]);
-                m2=(Double.parseDouble(get01[c2 + 1]));
+                m2 = (Double.parseDouble(get01[c2 + 1]));
 
-                m2=m1 - m2;
+                //And then one number is substracted by the other
+                m2 = m1 - m2;
 
-                if (checkTrue == true && m2 < 0) {
+                //This if will only be executed if what we are trying to calculate needs all the negative numbers to be positive and if the current number is negative
+                if (checkTrue && m2 < 0) {
 
-                    m2=m2 * -1;
+                    m2 = m2 * -1;
 
                 }
 
-                m2=Math.pow(m2, getmultiplierDouble);
-                m2=m2 * getmultiplierDouble2;
+                //This if will only be executed if we need to use the power and the multipier
+                if (multiplierAndpower) {
+                    
+                    m2 = Math.pow(m2, getmultiplierDouble);
+                    m2 = m2 * getmultiplierDouble2;
                 
-                getterM2=String.valueOf(m2);
+                }
+                
+                getterM2 = String.valueOf(m2);
 
                 o++;
                 q++;
                 u = 0;
 
-                result = result + m2;
+                //The different results of each expression are added in the "result" var
+                result +=m2;
                 get00string = "";
 
+                //"m3" will contain the value which will divide the final result. Ususally representated in the formulas with an "n"
                 m3 += m1;
 
                 getmultiplierstring01 = null;
                 getmultiplierstring02 = null;
             }
-
+            
+            //The final result is divided by the "n" 
             result = result / m3;
             passResultToClass = result;
 
@@ -265,6 +295,10 @@ public class MisuseTypicalCalculator {
 
     public static String getGetterM2() {
         return getterM2;
+    }
+
+    public static void setMultiplierAndpower(boolean aMultiplierAndpower) {
+        multiplierAndpower = aMultiplierAndpower;
     }
 
 }

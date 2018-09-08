@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Helpmath.jar" size="43339" download="eager" />
+    <jar href="Helpmath.jar" size="43320" download="eager" />
   </resources>
   <application-desc main-class="Welcome"  name="Helpmath" >
   </application-desc>
