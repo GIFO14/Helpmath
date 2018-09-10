@@ -12,22 +12,50 @@ import javax.swing.JOptionPane;
 public class MisuseTypicalCalculator {
 
     private static double result = 0, m1, m2, m3, passResultToClass, getmultiplierDouble2 = 0, getmultiplierDouble = 0;
-    private static String parseToString, get, getterM2, getmultiplierstring01, getmultiplierstring02, get00string, m2string, checker, get1, getDivisors, get2;
+    private static String parseToString, get, getterM2, getmultiplierstring01, getmultiplierstring02, get00string, m2string, checker, get1, getDivisors, get2, auxVar;
     private static int j = 0, getparse, ds, getmultiplierint01, getmultiplierint02, c2 = 0, o = 0, q, totalgetInt, u = 0, aux, timesCounter = 0;
     private static boolean check = false, checkTrue = false, checkTrue1 = true, checkTrue2 = false, ifTrueComa = false, multiplierAndpower = true;
 
     private static String[] misuseTypicalChar, getDivision;
     private static String[] get00;
     private static String[] get01;
+    private static String[] dividerDeleter;
 
     public void misuseTypical() {
 
         while (j < 1) {
+
+            dividerDeleter = parseToString.split("");
+
+            //This for will be useful to check if the user wrote an "/". If it's true, the "/" and the next numbers are going to be removed from the string
+            for (int i = 0; i < dividerDeleter.length; i++) {
+
+                if (dividerDeleter[i].equals("/")) {
+
+                    while (i < dividerDeleter.length) {
+
+                        dividerDeleter[i] = null;
+                        i++;
+
+                    }
+
+                    for (i = 0; i < dividerDeleter.length; i++) {
+
+                        auxVar += dividerDeleter[i];
+
+                    }
+                    
+                    auxVar = auxVar.replaceAll("null", "");
+                    parseToString = auxVar;
+                    
+                }
+            }
+
+            
+
             //This line replace all the characters that are not between 0-9 (and 0 and 9) for a null character.
-            
             setParseToString(parseToString.replaceAll("[^0-9+-^*]", ""));
-            //Replace all "," for ".".
-            
+
             //Split the string using the "+".
             misuseTypicalChar = parseToString.split(Pattern.quote("+"));
 
@@ -53,7 +81,7 @@ public class MisuseTypicalCalculator {
 
                                 getmultiplierstring01 = get00[i + 1];
 
-                              //This else if is used to continue filling the string with the next characters until the "*"
+                                //This else if is used to continue filling the string with the next characters until the "*"
                             } else if (!get00[i].equals("*")) {
                                 i++;
 
@@ -61,29 +89,28 @@ public class MisuseTypicalCalculator {
 
                                     getmultiplierstring01 += get00[i];
                                 }
-                                
-                                 
+
                                 aux = getmultiplierstring01.length();
-                                
+
                                 //This if is used only if the current last character is a ","
                                 if (getmultiplierstring01.substring(aux - 1, aux).equals(",")) {
-                                    
+
                                     //First the "," is replaced by a ""
                                     getmultiplierstring01 = getmultiplierstring01.replaceAll(",", "");
-                                    
+
                                     //then the number without "," is parsed to int, divided by 10 to delete the last character that is not useful. 
                                     //The reason why is not useful is because the last number (the number before the not useful number) is duplicated and it has to be deleted
                                     int temporal = Integer.parseInt(getmultiplierstring01);
                                     temporal = temporal / 10;
-                                    
+
                                     //afterwards the variable with the dupllicated number deleted is parsed to String and a "," is added
                                     getmultiplierstring01 = String.valueOf(temporal);
                                     getmultiplierstring01 += ",";
-                                    
+
                                     //now the next number is included into the string 
                                     i++;
                                     getmultiplierstring01 += get00[i];
-                                    
+
                                     //This boolean var is setted to true because the program can access to the next if
                                     //It is only true if the first decimal have been added into the string yet.
                                     ifTrueComa = true;
@@ -96,7 +123,7 @@ public class MisuseTypicalCalculator {
 
                                 //This  if is used to controll if is the first time this if is executed or not.
                                 if (timesCounter == 0) {
-                                    
+
                                     //This var contains the number that the final number will be divided to.2
                                     timesCounter = 10;
 
@@ -105,7 +132,7 @@ public class MisuseTypicalCalculator {
                                     timesCounter *= 10;
 
                                 }
-                                
+
                                 if (getmultiplierstring01.substring(aux - 2, aux - 1).equals(",")) {
 
                                     getmultiplierstring01 = getmultiplierstring01.replaceAll(",", "");
@@ -114,9 +141,9 @@ public class MisuseTypicalCalculator {
 
                                 getmultiplierDouble = Integer.parseInt(getmultiplierstring01);
                                 getmultiplierDouble = getmultiplierDouble / timesCounter;
-                                
-                              //If the "ifTrueComa" vaar is not true means that the string doesn't have any "," 
-                              //and there's no need to execute all the other code lines 
+
+                                //If the "ifTrueComa" vaar is not true means that the string doesn't have any "," 
+                                //and there's no need to execute all the other code lines 
                             } else {
 
                                 getmultiplierDouble = Integer.parseInt(getmultiplierstring01);
@@ -132,7 +159,7 @@ public class MisuseTypicalCalculator {
 
                         timesCounter = 0;
                         ifTrueComa = false;
-                        
+
                         if (get00[i].equals("*")) {
 
                             checkTrue2 = true;
@@ -194,7 +221,7 @@ public class MisuseTypicalCalculator {
                                 getmultiplierDouble2 = Integer.parseInt(getmultiplierstring02);
 
                             }
-                            
+
                             checkTrue2 = false;
                         }
 
@@ -220,14 +247,14 @@ public class MisuseTypicalCalculator {
                 get01 = get00string.split(Pattern.quote("^"));
                 get2 = get01[c2];
                 get01[c2] = null;
-                
+
                 //This if controlls if what we are calculating  needs the power and the multiplier to be calculate
                 if (multiplierAndpower) {
 
                     get01[c2 + 1] = null;
 
                 }
-                
+
                 //The expression "x-x" (x == any number) is separated by the "-"
                 get01 = get2.split(Pattern.quote("-"));
                 m1 = Double.parseDouble(get01[c2]);
@@ -245,12 +272,12 @@ public class MisuseTypicalCalculator {
 
                 //This if will only be executed if we need to use the power and the multipier
                 if (multiplierAndpower) {
-                    
+
                     m2 = Math.pow(m2, getmultiplierDouble);
                     m2 = m2 * getmultiplierDouble2;
-                
+
                 }
-                
+
                 getterM2 = String.valueOf(m2);
 
                 o++;
@@ -258,7 +285,7 @@ public class MisuseTypicalCalculator {
                 u = 0;
 
                 //The different results of each expression are added in the "result" var
-                result +=m2;
+                result += m2;
                 get00string = "";
 
                 //"m3" will contain the value which will divide the final result. Ususally representated in the formulas with an "n"
@@ -267,7 +294,7 @@ public class MisuseTypicalCalculator {
                 getmultiplierstring01 = null;
                 getmultiplierstring02 = null;
             }
-            
+
             //The final result is divided by the "n" 
             result = result / m3;
             passResultToClass = result;
